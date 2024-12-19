@@ -24,7 +24,7 @@ function lerConteudoDoArquivo(arquivo) {
 const imagemPrincipal = document.querySelector(".main-imagem");
 const nomeDaImagem = document.querySelector(".container-imagem-nome p");
 
-inputUpload.addEventListener("change", async (evento) => {
+inputUpload.addEventListener("change", async (evento) => { // Carregar imagem
     const arquivo = evento.target.files[0];
 
     if (arquivo) {
@@ -35,5 +35,28 @@ inputUpload.addEventListener("change", async (evento) => {
         } catch (erro) {
             console.error("Erro na leitura do arquivo");
         }
+    }
+})
+
+const inputTags = document.getElementById("input-tags");
+const listaTags = document.getElementById("lista-tags");
+
+inputTags.addEventListener("keypress", (evento) => { // Definir Tags
+    if (evento.key === "Enter") {
+        evento.preventDefault();
+        const tagTexto = inputTags.value.trim();
+        if (tagTexto != "") {
+            const tagNova = document.createElement("li");
+            tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`;
+            listaTags.appendChild(tagNova);
+            inputTags.value = "";
+        }
+    }
+})
+
+listaTags.addEventListener("click", (evento) => { // Excluir Tags
+    if (evento.target.classList.contains("remove-tag")) {
+        const tagQueQueremosRemover = evento.target.parentElement;
+        listaTags.removeChild(tagQueQueremosRemover);
     }
 })
